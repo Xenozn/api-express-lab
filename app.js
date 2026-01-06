@@ -1,11 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
-// routes
-const homeRoutes = require('./routes/v1/homeRoutes');
-app.use('/v1', homeRoutes);
+const apiVersion = process.env.API_VERSION || 'v1';
+const port = process.env.PORT || 3000;
+
+// routes dynamiques
+const homeRoutes = require(`./routes/${apiVersion}/homeRoutes`);
+app.use(`/${apiVersion}`, homeRoutes);
 
 // serveur
-app.listen(3000, () => {
-    console.log('Serveur lancé sur http://localhost:3000');
+app.listen(port, () => {
+    console.log(`Serveur lancé sur http://localhost:${port}/${apiVersion}`);
 });
